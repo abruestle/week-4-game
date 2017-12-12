@@ -261,8 +261,10 @@ var game = {
 	elements: ["earth", "air", "fire", "water", "light", "blood", "gravity","none"],
 	elementColors: ["green", "white", "blue", "light blue", "light yellow", "red", "black"],
 	elementIcons: ["leaf", "cloud", "fire", "tint", "star-empty", "heart", "scale", "ban-circle"],
+	elementDescriptions: ["Earth, metals, plants...well, some most plants. Its opposing element is air.", "Air, wind. Its opposing element is earth.", "Fire, plasma, heat, and the sun. Its opposing element is water.", "Water, ice, cold. Its opposing element is fire.", "Light, fiberoptics so most technology... Its opposing element is blood.", "Blood, battle, life. Its opposing element is light.", "A weird element that effects the laws of gravity. Aliens and Extras are the only ones who can currently use it... And no opposition is known.", "No elemental focus."],
 	stats: ["Attack", "Defense", "Hit", "Evade", "Physical", "Tech", "Magic", "Holy"],
 	statIcons: ["pushpin", "tower", "screenshot", "resize-horizontal", "user", "qrcode", "map-marker", "tree-deciduous"],
+	statDescriptions: ["How hard you hit.", "How hard a hit you take.", "How often you hit.", "How often you avoid being hit.", "Attacks with fists, ears, simple weapons, or whatever.", "Attacks made with mechanical or other technology based weapons.", "Magic is an arcane force that uses knowledge to directly change the laws of physics. It is harder to learn than holy, and usually less fickle...unless you mess up yourself. So overall less reliable but more powerful...unless you are going against the world trees.", "Holy power comes from the 6 world trees that hold the continents together – or rarely from the mythical 7th that holds all the continents to eachother."],
 	changeElement: function() {
 		switch(game.difficulty) {
 			case 1: {
@@ -301,15 +303,15 @@ var game = {
 		console.log("test");
 		}
 
+		//Disable attacking
+		$("#attack").attr("class","btn btn-default disabled");
 
       for (var i = 0; i < game.characters.length; i++) {
       	//create images for characters
-        
-        
-
+       
         //add into .tab-pane .row each character
 
-		$("#panel-"+Math.floor(i/4+1)+" .row").append('<div class="col-md-3"><div class="thumbnail"><img alt="Bootstrap Thumbnail Third" src="assets/images/'+game.characters[i]["name"]+'.png"><div class="caption"><h3>'+game.characters[i]["name"]+' </h3>'+game.characters[i]["title"]+'<p><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true"></span></p></div></div></div>');
+		$("#panel-"+Math.floor(i/4+1)+" .row").append('<div class="col-md-3"><div class="thumbnail char" data-name="'+i+'" id="'+i+'panel"><img alt="Bootstrap Thumbnail Third" src="assets/images/'+game.characters[i]["name"]+'.png" data-toggle="tooltip" title="'+game.characters[i]["name"]+': '+game.characters[i]["description"]+'"><div class="caption"><h3>'+game.characters[i]["name"]+' </h3>'+game.characters[i]["title"]+'<p><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></p></div></div></div>');
       }
 
 	},
@@ -319,11 +321,40 @@ var game = {
 	lost: function() {
 
 	},
-	chooseChar: function() {
-		if ( game.enemy = -1){
+	chooseChar: function(i) {
+		//I used i as this so that I could steal some of the code from the loop in resetGame. ...It is also easier to see than some of the descriptive names. Later I will change it to 'character' or maybe 'char'
+		if ( game.player == -1){
 			//chooses character as player
-		} else if (game.player = -1) {
-			//chooses character as player
+			game.player = i;
+
+			$("#player").html('<img alt="Bootstrap Thumbnail First" src="assets/images/'+game.characters[i]["name"]+'.png"><div class="caption"><div class="row"><div class="col-xs-4"><h3>'+game.characters[i]["name"]+'</h3></div><div class="col-xs-8 glyphiconDiv"><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></div></div><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="playerHP" style="width:100%">'+game.characters[i]["stats"][0]+' hp</div></div></div>');
+
+			$("#"+i+"panel").remove();
+
+			$("#comments p").text("Now select an opponent! I recommend starting with one you think is easy.")
+			//Goes to comments tab
+			$("#comments-tab a").click();
+
+						
+
+		} else if (game.enemy == -1) {
+			//chooses character as enemy
+			game.enemy = i;
+
+			$("#enemy").html('<img alt="Bootstrap Thumbnail First" src="assets/images/'+game.characters[i]["name"]+'.png"><div class="caption"><div class="row"><div class="col-xs-4"><h3>'+game.characters[i]["name"]+'</h3></div><div class="col-xs-8 glyphiconDiv"><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></div></div><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="playerHP" style="width:100%">'+game.characters[i]["stats"][0]+' hp</div></div></div>');
+
+			$("#"+i+"panel").remove();
+
+			$("#comments p").text("Now that you have an opponent, select 'Attack' to start attacking!")
+			//Goes to comments tab
+			$("#comments-tab a").click();
+
+			$("#attack").attr("class","btn btn-default");
+
+		} else {
+			$("#comments p").text("You already have an opponent! Select 'Attack' to start attacking!")
+			//Goes to comments tab
+			$("#comments-tab a").click();
 		}
 
 	},
@@ -392,10 +423,15 @@ var game = {
 game.resetGame();
 
 $("#attack").on("click", function() {
-	if( game.enemy > -1){
+	if($("#attack").attr("class") != "btn btn-default disabled") {
 		game.attack();
 	}
 });
-$("#char").on("click", function() {
-	game.chooseChar();
+
+$(".char").on("click", function() {
+	game.chooseChar($(this).attr("data-name"));
+
 });
+
+
+

@@ -48,3 +48,9 @@ p {
 .btn-group, .btn-default {
 	width:100%;
 }
+
+
+.glyphiconDiv {
+    letter-spacing: 10px;
+    margin-top: 5px;
+}
