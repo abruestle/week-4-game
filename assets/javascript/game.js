@@ -304,7 +304,7 @@ var game = {
 		}
 
 		//Disable attacking
-		$("#attack").attr("class","btn btn-default disabled");
+		$("#attack").attr("disabled","disabled");
 
       for (var i = 0; i < game.characters.length; i++) {
       	//create images for characters
@@ -327,7 +327,7 @@ var game = {
 			//chooses character as player
 			game.player = i;
 
-			$("#player").html('<img alt="Bootstrap Thumbnail First" src="assets/images/'+game.characters[i]["name"]+'.png"><div class="caption"><div class="row"><div class="col-xs-4"><h3>'+game.characters[i]["name"]+'</h3></div><div class="col-xs-8 glyphiconDiv"><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></div></div><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="playerHP" style="width:100%">'+game.characters[i]["stats"][0]+' hp</div></div></div>');
+			$("#player").html('<img alt="Bootstrap Thumbnail First" src="assets/images/'+game.characters[i]["name"]+'.png" data-toggle="tooltip" title="'+game.characters[i]["name"]+': '+game.characters[i]["description"]+'"><div class="caption"><div class="row"><div class="col-xs-4"><h3>'+game.characters[i]["name"]+'</h3></div><div class="col-xs-8 glyphiconDiv"><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></div></div><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="playerHP" style="width:100%">'+game.characters[i]["stats"][0]+' hp</div></div></div>');
 
 			$("#"+i+"panel").remove();
 
@@ -341,7 +341,7 @@ var game = {
 			//chooses character as enemy
 			game.enemy = i;
 
-			$("#enemy").html('<img alt="Bootstrap Thumbnail First" src="assets/images/'+game.characters[i]["name"]+'.png"><div class="caption"><div class="row"><div class="col-xs-4"><h3>'+game.characters[i]["name"]+'</h3></div><div class="col-xs-8 glyphiconDiv"><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></div></div><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="playerHP" style="width:100%">'+game.characters[i]["stats"][0]+' hp</div></div></div>');
+			$("#enemy").html('<img alt="Bootstrap Thumbnail First" src="assets/images/'+game.characters[i]["name"]+'.png" data-toggle="tooltip" title="'+game.characters[i]["name"]+': '+game.characters[i]["description"]+'"><div class="caption"><div class="row"><div class="col-xs-4"><h3>'+game.characters[i]["name"]+'</h3></div><div class="col-xs-8 glyphiconDiv"><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></div></div><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="enemyHP" style="width:100%">'+game.characters[i]["stats"][0]+' hp</div></div></div>');
 
 			$("#"+i+"panel").remove();
 
@@ -349,7 +349,7 @@ var game = {
 			//Goes to comments tab
 			$("#comments-tab a").click();
 
-			$("#attack").attr("class","btn btn-default");
+			$("#attack").removeAttr("disabled");
 
 		} else {
 			$("#comments p").text("You already have an opponent! Select 'Attack' to start attacking!")
@@ -359,73 +359,124 @@ var game = {
 
 	},
 	updateField: function(character, damage) {
+		console.log("updateField "+ character+", "+damage);
 		//shows attack on enemy then player and updates hp 
 		//use setTimeout and do not reference 'game'
-
-		if(character = 0) {
+		if(character == 0) {
 			//Update progress bar of player and have character image of player animate
-			$("#playerHP").width(game.characters[game.player]["stats"][1]/game.characters[game.player]["stats"][0]+ "%");
+			game.characters[game.player]["stats"][1] = game.characters[game.player]["stats"][1] - damage;
+			$("#playerHP").width(Math.floor(100*game.characters[game.player]["stats"][1]/game.characters[game.player]["stats"][0])+ "%");
+			$("#playerHP").text(game.characters[game.player]["stats"][1]+" hp");
+			console.log("HP changed on player.");
+			console.log("attack finished.");
 			//enable attacking
-			$("#attack").attr("class","btn btn-default");
+			$("#attack").removeAttr("disabled");
 
-		} else if(character = 1){
+
+		} else if(character == 1){
+
 			//Update progress bar of enemy and have character image of enemy animate
+			game.characters[game.enemy]["stats"][1] = game.characters[game.enemy]["stats"][1] - damage;
+				
+			//If enemy is killed
+			if(game.characters[game.enemy]["stats"][1] < 1){
+				$("#enemyHP").width("0%");
+				$("#enemyHP").text("0 hp");
+				game.enemy = -1;
+				$("#enemy").empty();
+				console.log("Enemy killed.");
 
-			//enable attacking
-			$("#attack").attr("class","btn btn-default");
+				//attack hits comment
+				$("#comments p").append(" The enemy was killed! Select a new opponent.")
+				//Goes to comments tab
+				$("#comments-tab a").click();
+				$("#attack").Attr("disabled", "disabled");
+			//else if enemy is above 0 hp
+			} else {
+				$("#enemyHP").width(Math.floor(100*game.characters[game.enemy]["stats"][1]/game.characters[game.enemy]["stats"][0])+ "%");
+				$("#enemyHP").text(game.characters[game.enemy]["stats"][1]+" hp");
+				console.log("HP changed on enemy.");
+				$("#attack").removeAttr("disabled");
+				// Enemy's turn:
+				game.enemyAttack();
+			}
+
 		} else {
 			//Update both characters, no animation.
+			$("#playerHP").width(Math.floor(100*game.characters[game.player]["stats"][1]/game.characters[game.player]["stats"][0])+ "%");
+			$("#playerHP").text(game.characters[game.player]["stats"][1]+" hp");
+			$("#enemyHP").width(Math.floor(100*game.characters[game.enemy]["stats"][1]/game.characters[game.enemy]["stats"][0])+ "%");
+			$("#enemyHP").text(game.characters[game.enemy]["stats"][1]+" hp");
+			$("#attack").removeAttr("disabled");
 
-			//enable attacking
-			$("#attack").attr("class","btn btn-default");
 		}
 	},
 	// showMiss: function(character) {
 
 	// },
 	enemyAttack: function () {
+		console.log("enemyAttack");
 		// Enemy attacks back with untyped attack
 		//game.characters[game.enemy]["stats"][3] is the enemy's attack. Then comes defense, hit, and evade
 		//if 1d20 + Hit - Evade - 10 is positive, it hits.
-		if (Math.random() * 20 + game.characters[game.enemy]["stats"][5] - game.characters[game.player]["stats"][6] - 9) {
+		if (Math.random() * 20 + game.characters[game.enemy]["stats"][5] - game.characters[game.player]["stats"][6] - 9 > 0) {
 			//1d20 + Attack - Defense of player
-			var damage = Math.random() * 20 + game.characters[game.enemy]["stats"][3] - game.characters[game.player]["stats"][4];
+			var damage = Math.max(0, Math.floor(Math.random() * 20 + game.characters[game.enemy]["stats"][3] - game.characters[game.player]["stats"][4]));
+
+			//attack hits comment
+			$("#comments p").append(" The enemy hit for "+damage+" damage.")
+			//Goes to comments tab
+			$("#comments-tab a").click();
+			console.log("enemy hit");
 			game.updateField(0, damage);
 		} else {
 			//attack misses
 			$("#comments p").append(" The enemy missed.")
 			//Goes to comments tab
 			$("#comments-tab a").click();
+			console.log("The enemy missed.");
+
+			
+			console.log("attack finished.");
+			//enable attacking
+
+			$("#attack").removeAttr("disabled");
 		}
 	},
 	attack: function() {
-		console.log("test")
+		console.log("attack")
 		//disable attacking until all action is resolve
-		$("#attack").attr("class","btn btn-default disabled");
+		$("#attack").attr("disabled","disabled");
+		console.log("disabled");
 		// Attack enemy with untyped attack
 		//game.characters[game.enemy]["stats"][3] is the enemy's attack. Then comes defense, hit, and evade
 		//if 1d20 + Hit - Evade - 10 is positive, it hits.
-		if (Math.random() * 20 + game.characters[game.player]["stats"][5] - game.characters[game.enemy]["stats"][6] - 9) {
+		if (Math.random() * 20 + game.characters[game.player]["stats"][5] - game.characters[game.enemy]["stats"][6] - 9 > 0) {
 			//1d20 + Attack - Defense of player
-			var damage = Math.random() * 20 + game.characters[game.player]["stats"][3] - game.characters[game.enemy]["stats"][4];
+			console.log("You hit.");
+			var damage = Math.max(0, Math.floor(Math.random() * 20 + game.characters[game.player]["stats"][3] - game.characters[game.enemy]["stats"][4]));
 			game.updateField(1, damage);
+			//attack its
+			$("#comments p").text("You hit for "+damage+" damage.")
+			//Goes to comments tab
+			$("#comments-tab a").click();
 		} else {
 			//attack misses
 			$("#comments p").text("You missed.")
 			//Goes to comments tab
 			$("#comments-tab a").click();
+			console.log("You missed.");
+			// Enemy's turn:
+			game.enemyAttack();
 		}
-		// Enemy's turn:
-		game.enemyAttack();
+		
 	}
 
 }
 game.resetGame();
 
 $("#attack").on("click", function() {
-	if($("#attack").attr("class") != "btn btn-default disabled") {
-		game.attack();
-	}
+	game.attack();
 });
 
 $(".char").on("click", function() {
