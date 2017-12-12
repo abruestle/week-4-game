@@ -1,0 +1,41 @@
+Looks
+
+-use bootstrap framework tool to set up
+
+-header (collapsable? small? ...not jumbotron)
+
+-playing field: 5-2-5 in bootstrap
+--picture thumbnail, name of character, whether they are the player (maybe tint the boxes green and red) and HP bar
+--center has all attack options (just attack in basic version)
+
+-character field
+--split up by type/race
+--descriptions for everything
+-pic of character, name, description (maybe on hover of pic if no room), strengths and weaknesses, include icons for strengths/weaknesses, hover gives description of each
+--disappears when in play, either disappears or is faded when dead?
+
+
+
+Variables needed
+
+-Object for overall game
+
+--objects or arrays within for each character
+---8 ability score stats (Attack Defense Hit Dodge Physical Technological Magic Holy)...first four for base version.
+---2 for hp/max hp (in like third version may add in mp and specials)
+---1 for element (might change to 2 later)
+---1 for current place - alive, player, computer, dead...might do this as separate variable
+---(2 for leveling and exp)
+---(multiple or an array for status effects)
+
+
+Functions
+ -change wallpaper/element changes wallpaper (and may give strength/weakness to characters..whether this is random or not depends ondifficulty level - easy always favors you, normal is random, high favors enemy)
+ -attack - current player character tries to hit enemy, if it hits, they damage the enemy. minus defense stat.
+ -defend - same as attack except for enemy
+ -click event for attack to trigger attack then defend.
+ --other attacks get similar, but give type of attack to attack function...if attack function does not recieve anything, it would count it as untyped
+ -function for selecting character
+ -function for selecting enemy
+ -trigger events for selecting char/enemy that only work when you have no char/enemy. This can be one event for all characters, that sends that one to the last available spot (char, then enemy)
+ -win/lose function?
