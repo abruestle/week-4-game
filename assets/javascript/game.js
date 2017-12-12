@@ -187,7 +187,7 @@ var game = {
 			gender: "Male",
 			element: "Fire",
 			stats: [150, 150, 2, 2, 1, 3, 4, 4, 1, 2, 3],
-			description: "One of the last few of an ancient race completely turned into earbeasts. Fortunately, he has kept his longevity.  He is trained in speed and firey attacks.",
+			description: "One of the last few of an ancient race completely turned into earbeasts, and almost turned extinct byt the ents. Fortunately, he has kept his longevity.  He is trained in speed and firey attacks.",
 			type1: "Evade",
 			type2: "Physical",
 			weapon: "Ninja daggers"
@@ -305,21 +305,65 @@ var game = {
 
 		//Disable attacking
 		$("#attack").attr("disabled","disabled");
+		//Set default places for player and computer
+		$("#player").html('<img alt="Bootstrap Thumbnail First" src="http://via.placeholder.com/600x200"><div class="caption"><h3>Player</h3><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="playerHP" style="width:100%"></div></div></div>');
+		$("#enemy").html('<img alt="Bootstrap Thumbnail First" src="http://via.placeholder.com/600x200"><div class="caption"><h3>Computer</h3><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="enemyHP" style="width:100%"></div></div></div>');
+
+
+
+		//Remove characters from rows
+		for (var i = 1; i <6; i++) {
+			$("#panel-"+i+" .row").empty();
+		}
+		
 
       for (var i = 0; i < game.characters.length; i++) {
+      	//Reset HP to 0 and current attack to attack.
+      	game.characters[i]["stats"][1] = game.characters[i]["stats"][0];
+		game.characters[i]["stats"][2] = game.characters[i]["stats"][3];
       	//create images for characters
-       
         //add into .tab-pane .row each character
 
-		$("#panel-"+Math.floor(i/4+1)+" .row").append('<div class="col-md-3"><div class="thumbnail char" data-name="'+i+'" id="'+i+'panel"><img alt="Bootstrap Thumbnail Third" src="assets/images/'+game.characters[i]["name"]+'.png" data-toggle="tooltip" title="'+game.characters[i]["name"]+': '+game.characters[i]["description"]+'"><div class="caption"><h3>'+game.characters[i]["name"]+' </h3>'+game.characters[i]["title"]+'<p><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></p></div></div></div>');
+
+		$("#panel-"+Math.floor(i/4+1)+" .row").append('<div class="col-sm-3"><div class="thumbnail char" data-name="'+i+'" id="'+i+'panel"><img alt="Bootstrap Thumbnail Third" src="assets/images/'+game.characters[i]["name"]+'.png" data-toggle="tooltip" title="'+game.characters[i]["name"]+': '+game.characters[i]["description"]+'"><div class="caption"><h3>'+game.characters[i]["name"]+' </h3>'+game.characters[i]["title"]+'<p><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></p></div></div></div>');
+
+
       }
 
 	},
 	won: function() {
-
+		$("#enemyHP").width("0%");
+		$("#enemyHP").text("0 hp");
+		game.enemy = -1;
+		$("#enemy").empty();
+		console.log("Enemy killed.");
+		//if no enemies left, comments that the person won.
+		if(($('.char').length) == 0){
+			game.resetGame();
+			$("#comments p").html("The enemy was killed! You won all the battles!")
+			//Goes to comments tab
+			$("#comments-tab a").click();
+		} else {
+			//heal between battles. ...Because otherwise you could not get through 20 characters
+			var healed = Math.floor((game.characters[game.player]["stats"][0]-game.characters[game.player]["stats"][1])/4);
+			game.characters[game.player]["stats"][1] = game.characters[game.player]["stats"][1] + healed;
+			//raise attack
+			game.characters[game.player]["stats"][3] = game.characters[game.player]["stats"][3] + game.characters[game.player]["stats"][4];
+			//killed comment
+			$("#comments p").append(" The enemy was killed! You gained "+game.characters[game.player]["stats"][4]+" attack and "+healed+" hp. Select a new opponent.")
+			//Goes to comments tab
+			$("#comments-tab a").click();
+			$("#attack").Attr("disabled", "disabled");
+		}
 	},
 	lost: function() {
 
+		//if player is killed
+		game.resetGame();
+		//comment on death
+		$("#comments p").text("You died. Select a new character?")
+		//Goes to comments tab
+		$("#comments-tab a").click();
 	},
 	chooseChar: function(i) {
 		//I used i as this so that I could steal some of the code from the loop in resetGame. ...It is also easier to see than some of the descriptive names. Later I will change it to 'character' or maybe 'char'
@@ -327,7 +371,7 @@ var game = {
 			//chooses character as player
 			game.player = i;
 
-			$("#player").html('<img alt="Bootstrap Thumbnail First" src="assets/images/'+game.characters[i]["name"]+'.png" data-toggle="tooltip" title="'+game.characters[i]["name"]+': '+game.characters[i]["description"]+'"><div class="caption"><div class="row"><div class="col-xs-4"><h3>'+game.characters[i]["name"]+'</h3></div><div class="col-xs-8 glyphiconDiv"><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></div></div><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="playerHP" style="width:100%">'+game.characters[i]["stats"][0]+' hp</div></div></div>');
+			$("#player").html('<img alt="Bootstrap Thumbnail First" src="assets/images/'+game.characters[i]["name"]+'.png" data-toggle="tooltip" title="'+game.characters[i]["name"]+': '+game.characters[i]["description"]+'"><div class="caption"><div class="row"><div class="col-xs-6 col-md-4"><h3>'+game.characters[i]["name"]+'</h3></div><div class="col-xs-6 col-md-8 glyphiconDiv"><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></div></div><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="playerHP" style="width:100%">'+game.characters[i]["stats"][0]+' hp</div></div></div>');
 
 			$("#"+i+"panel").remove();
 
@@ -363,15 +407,20 @@ var game = {
 		//shows attack on enemy then player and updates hp 
 		//use setTimeout and do not reference 'game'
 		if(character == 0) {
-			//Update progress bar of player and have character image of player animate
+			//player got hit
 			game.characters[game.player]["stats"][1] = game.characters[game.player]["stats"][1] - damage;
-			$("#playerHP").width(Math.floor(100*game.characters[game.player]["stats"][1]/game.characters[game.player]["stats"][0])+ "%");
-			$("#playerHP").text(game.characters[game.player]["stats"][1]+" hp");
-			console.log("HP changed on player.");
-			console.log("attack finished.");
-			//enable attacking
-			$("#attack").removeAttr("disabled");
-
+			if(game.characters[game.player]["stats"][1] < 1){
+				game.lost();
+			} else {
+				//Update progress bar of player and have character image of player animate
+				
+				$("#playerHP").width(Math.floor(100*game.characters[game.player]["stats"][1]/game.characters[game.player]["stats"][0])+ "%");
+				$("#playerHP").text(game.characters[game.player]["stats"][1]+" hp");
+				console.log("HP changed on player.");
+				console.log("attack finished.");
+				//enable attacking
+				$("#attack").removeAttr("disabled");
+			}
 
 		} else if(character == 1){
 
@@ -380,17 +429,7 @@ var game = {
 				
 			//If enemy is killed
 			if(game.characters[game.enemy]["stats"][1] < 1){
-				$("#enemyHP").width("0%");
-				$("#enemyHP").text("0 hp");
-				game.enemy = -1;
-				$("#enemy").empty();
-				console.log("Enemy killed.");
-
-				//attack hits comment
-				$("#comments p").append(" The enemy was killed! Select a new opponent.")
-				//Goes to comments tab
-				$("#comments-tab a").click();
-				$("#attack").Attr("disabled", "disabled");
+				game.won();
 			//else if enemy is above 0 hp
 			} else {
 				$("#enemyHP").width(Math.floor(100*game.characters[game.enemy]["stats"][1]/game.characters[game.enemy]["stats"][0])+ "%");
@@ -455,11 +494,11 @@ var game = {
 			//1d20 + Attack - Defense of player
 			console.log("You hit.");
 			var damage = Math.max(0, Math.floor(Math.random() * 20 + game.characters[game.player]["stats"][3] - game.characters[game.enemy]["stats"][4]));
-			game.updateField(1, damage);
-			//attack its
+			//attack hits
 			$("#comments p").text("You hit for "+damage+" damage.")
 			//Goes to comments tab
 			$("#comments-tab a").click();
+			game.updateField(1, damage);
 		} else {
 			//attack misses
 			$("#comments p").text("You missed.")
@@ -479,7 +518,7 @@ $("#attack").on("click", function() {
 	game.attack();
 });
 
-$(".char").on("click", function() {
+$("body").on("click", ".char", function() {
 	game.chooseChar($(this).attr("data-name"));
 
 });
