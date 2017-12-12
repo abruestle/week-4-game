@@ -1,1 +1,50 @@
-# Empty CSS file for your own CSS
+body {
+	 transition: background 2s;
+    -webkit-transition: background 2s;
+}
+
+
+.page-header {
+	margin: 0 0 10px 10px;
+	background: white;
+    float: left;
+    padding: 10px;
+    border-bottom-left-radius:20px;
+    border-bottom-right-radius:20px;
+}
+
+.progress-bar {
+	 transition: width 2s;
+    -webkit-transition: width 2s;
+
+}
+
+h1 {
+	margin-top: 0px;
+}
+
+h3 {
+	margin:0px;
+}
+
+.caption p {
+	margin:0px;
+	text-align: center;
+    letter-spacing: 10px;
+}
+
+p {
+	background: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 5px;
+}
+
+.nav-tabs li:not(.active) a {
+	background: white;
+    opacity: .7;
+}
+    
+.btn-group, .btn-default {
+	width:100%;
+}
