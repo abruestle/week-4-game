@@ -9,10 +9,10 @@ var game = {
 	// Humans
 		gardener = {	
 			name: "Eve",
-			race: "human",
+			race: "Human",
 			title: "The Gardener",
-			gender: "female",
-			element: "earth",
+			gender: "Female",
+			element: "Earth",
 			stats: [180, 2, 2, 4, 3, 1, 4, 1, 2, 3],
 			description: "A girl raised by Ents. Now that she's learned they eat other sentient races after turning them into earbeasts, she wants to stop her father from doing so. And whatever else he's planning.",
 			type1: "Defense",
@@ -257,16 +257,17 @@ var game = {
 	difficulty: 1,
 	element: "earth",
 	elements: ["earth", "air", "fire", "water", "light", "blood", "gravity"],
+	elementColors: ["green", "white", "blue", "light blue", "light yellow", "red", "black"],
 	changeElement: function() {
-		switch difficulty {
+		switch(this.difficulty) {
 			case 1: {
 				//code for easy difficulty - defaults to player's element
-				this.element = this.characters[enemy.element];
+				this.element = this.characters[this.player]["element"].toLowerCase();
 				break;
 			}
 			case 3: {
 				//code for hard difficulty - defaults to enemy's element
-				this.element = this.characters[enemy.element];
+				this.element = this.characters[this.enemy]["element"].toLowerCase();
 				break;
 			}
 			default: {
@@ -274,7 +275,7 @@ var game = {
 				this.element = this.elements[Math.floor(Math.random() * 7)];
 			}
 		}
-		document.body.style.background = "url('assets/images/" + this.element + Math.floor(Math.random() * 2) + ".png') fixed center center no-repeat #000000";
+		document.body.style.background = "url('assets/images/" + this.element + Math.floor(Math.random() * 2+1) + ".png') fixed center center no-repeat " + this.elementColors[this.elements.indexOf(this.element)];
 
 	},
 	resetGame: function() {
@@ -289,27 +290,27 @@ var game = {
 	chooseChar: function() {
 
 	},
-	attack: function() {
-		// Attack enemy with untyped attack
-		enemyAttack();
-	},
-	enemyAttack: function () {
-		// Enemy attacks back with untyped attack
-		showAttack();
-		
-	},
 	showAttack: function() {
 		//shows attack on enemy then player and updates hp 
 		//use setTimeout and do not reference 'this'
+	},
+	enemyAttack: function () {
+		// Enemy attacks back with untyped attack
+		this.showAttack();
+		
+	},
+	attack: function() {
+		// Attack enemy with untyped attack
+		this.enemyAttack();
 	}
 
 
 }
 
-$("#attack").click(){
-	game.attack();
-}
+$("#attack").click(
+	game.attack()
+);
 
-$("#char").click(){
-	game.attack();
-}
+$("#char").click(
+	game.chooseChar()
+);
