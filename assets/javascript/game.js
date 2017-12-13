@@ -256,10 +256,10 @@ var game = {
 	],
 	player: -1,
 	enemy: -1,
-	difficulty: 0,
+	difficulty: 2,
 	element: "earth",
 	elements: ["earth", "air", "fire", "water", "light", "blood", "gravity","none"],
-	elementColors: ["green", "white", "blue", "light blue", "light yellow", "red", "black"],
+	elementColors: ["green", "white", "blue", "lightblue", "yellow", "red", "black"],
 	elementIcons: ["leaf", "cloud", "fire", "tint", "star-empty", "heart", "scale", "ban-circle"],
 	elementDescriptions: ["Earth, metals, plants...well, some most plants. Its opposing element is air.", "Air, wind. Its opposing element is earth.", "Fire, plasma, heat, and the sun. Its opposing element is water.", "Water, ice, cold. Its opposing element is fire.", "Light, fiberoptics so most technology... Its opposing element is blood.", "Blood, battle, life. Its opposing element is light.", "A weird element that effects the laws of gravity. Aliens and Extras are the only ones who can currently use it... And no opposition is known.", "No elemental focus."],
 	stats: ["Attack", "Defense", "Hit", "Evade", "Physical", "Tech", "Magic", "Holy"],
@@ -289,6 +289,7 @@ var game = {
 			}
 		}
 		document.body.style.background = "url('assets/images/" + game.element + Math.floor(Math.random() * 2+1) + ".png') fixed center center no-repeat " + game.elementColors[game.elements.indexOf(game.element)];
+		$(".char img").attr("background-color", game.elementColors[game.elements.indexOf(game.element)]);
 
 	},
 	resetGame: function() {
@@ -353,7 +354,7 @@ var game = {
 			$("#comments p").append(" The enemy was killed! You gained "+game.characters[game.player]["stats"][4]+" attack and "+healed+" hp. Select a new opponent.")
 			//Goes to comments tab
 			$("#comments-tab a").click();
-			$("#attack").Attr("disabled", "disabled");
+			$("#attack").attr("disabled", "disabled");
 		}
 	},
 	lost: function() {
@@ -387,6 +388,7 @@ var game = {
 
 			$("#enemy").html('<img alt="Bootstrap Thumbnail First" src="assets/images/'+game.characters[i]["name"]+'.png" data-toggle="tooltip" title="'+game.characters[i]["name"]+': '+game.characters[i]["description"]+'"><div class="caption"><div class="row"><div class="col-xs-4"><h3>'+game.characters[i]["name"]+'</h3></div><div class="col-xs-8 glyphiconDiv"><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></div></div><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="enemyHP" style="width:100%">'+game.characters[i]["stats"][0]+' hp</div></div></div>');
 
+			game.changeElement();
 			$("#"+i+"panel").remove();
 
 			$("#comments p").text("Now that you have an opponent, select 'Attack' to start attacking!")
@@ -394,6 +396,7 @@ var game = {
 			$("#comments-tab a").click();
 
 			$("#attack").removeAttr("disabled");
+
 
 		} else {
 			$("#comments p").text("You already have an opponent! Select 'Attack' to start attacking!")

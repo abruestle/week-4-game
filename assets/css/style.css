@@ -54,3 +54,15 @@ p {
     letter-spacing: 10px;
     margin-top: 5px;
 }
+
+#player img {
+	background-color: lightblue;
+}
+
+#enemy img {
+	background-color: #ff2727;
+}
+
+.char img  {
+	background-color: #53ff56;
+}
