@@ -150,7 +150,7 @@ var game = {
 			gender: "Male",
 			element: "Gravity",
 			stats: [150, 150, 4, 4, 2, 1, 3, 3, 1, 2, 4],
-			description: "The ex-leader of Green Dream, the eco-terrorist group. He has a good heart and lofty ideals, but unfortunately the plants he was trying to protect eat people. And were threatening him to help them with their new race of super ents...",
+			description: "The ex-leader of Green Dream, the eco-terrorist group. He has a good heart and lofty ideals, but unfortunately the plants he was trying to protect eat people. And were threatening him to help them with their new race of super ents... He works as a sherpa for his day-job.",
 			type1: "Attack",
 			type2: "Holy",
 			weapon: "Backpack"
@@ -290,7 +290,7 @@ var game = {
 			}
 		}
 		document.body.style.background = "url('assets/images/" + game.element + Math.floor(Math.random() * 2+1) + ".png') fixed center center no-repeat " + game.elementColors[game.elements.indexOf(game.element)];
-		$(".char img").attr("background-color", game.elementColors[game.elements.indexOf(game.element)]);
+		$(".char img").css("background-color", game.elementColors[game.elements.indexOf(game.element)]);
 
 	},
 	resetGame: function() {
@@ -308,9 +308,8 @@ var game = {
 		//Disable attacking
 		$("#attack").attr("disabled","disabled");
 		//Set default places for player and computer
-		$("#player").html('<img alt="Bootstrap Thumbnail First" src="http://via.placeholder.com/600x200"><div class="caption"><h3>Player</h3><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="playerHP" style="width:100%"></div></div></div>');
-		$("#enemy").html('<img alt="Bootstrap Thumbnail First" src="http://via.placeholder.com/600x200"><div class="caption"><h3>Computer</h3><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="enemyHP" style="width:100%"></div></div></div>');
-
+		$("#player").html('<img alt="Bootstrap Thumbnail First" src="assets/images/player.png"><div class="caption"><h3>Player</h3><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="playerHP" style="width:100%"></div></div></div>');
+		$("#enemy").html('<img alt="Bootstrap Thumbnail First" src="assets/images/enemy.png"><div class="caption"><h3>Computer</h3><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="enemyHP" style="width:100%"></div></div></div>');
 
 
 		//Remove characters from rows
@@ -328,6 +327,7 @@ var game = {
 
 
 		$("#panel-"+Math.floor(i/4+1)+" .row").append('<div class="col-sm-3"><div class="thumbnail char" data-name="'+i+'" id="'+i+'panel"><img alt="Bootstrap Thumbnail Third" src="assets/images/'+game.characters[i]["name"]+'.png" data-toggle="tooltip" title="'+game.characters[i]["name"]+': '+game.characters[i]["description"]+'"><div class="caption"><h3>'+game.characters[i]["name"]+' </h3>'+game.characters[i]["title"]+'<p><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></p></div></div></div>');
+		$(".char img").css("background-color", game.elementColors[game.elements.indexOf(game.element)]);
 
 
       }
@@ -373,7 +373,7 @@ var game = {
 			//chooses character as player
 			game.player = i;
 
-			$("#player").html('<img alt="Bootstrap Thumbnail First" src="assets/images/'+game.characters[i]["name"]+'.png" data-toggle="tooltip" title="'+game.characters[i]["name"]+': '+game.characters[i]["description"]+'"><div class="caption"><div class="row"><div class="col-xs-6 col-md-4"><h3>'+game.characters[i]["name"]+'</h3></div><div class="col-xs-6 col-md-8 glyphiconDiv"><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></div></div><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="playerHP" style="width:100%">'+game.characters[i]["stats"][0]+' hp</div></div></div>');
+			$("#player").html('<img alt="Bootstrap Thumbnail First" src="assets/images/'+game.characters[i]["name"]+'.png" data-toggle="tooltip" title="'+game.characters[i]["name"]+': '+game.characters[i]["description"]+'"><div class="caption"><div class="row"><div class="col-xs-3"><h3>'+game.characters[i]["name"]+'</h3></div><div class="col-xs-5 titleSmall">'+game.characters[i]["title"]+'</div><div class="col-xs-4 glyphiconDiv"><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></div></div><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="playerHP" style="width:100%">'+game.characters[i]["stats"][0]+' hp</div></div></div>');
 
 			$("#"+i+"panel").remove();
 
@@ -387,7 +387,7 @@ var game = {
 			//chooses character as enemy
 			game.enemy = i;
 
-			$("#enemy").html('<img alt="Bootstrap Thumbnail First" src="assets/images/'+game.characters[i]["name"]+'.png" data-toggle="tooltip" title="'+game.characters[i]["name"]+': '+game.characters[i]["description"]+'"><div class="caption"><div class="row"><div class="col-xs-4"><h3>'+game.characters[i]["name"]+'</h3></div><div class="col-xs-8 glyphiconDiv"><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></div></div><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="enemyHP" style="width:100%">'+game.characters[i]["stats"][0]+' hp</div></div></div>');
+			$("#enemy").html('<img alt="Bootstrap Thumbnail First" src="assets/images/'+game.characters[i]["name"]+'.png" data-toggle="tooltip" title="'+game.characters[i]["name"]+': '+game.characters[i]["description"]+'"><div class="caption"><div class="row"><div class="col-xs-3"><h3>'+game.characters[i]["name"]+'</h3></div><div class="col-xs-5 titleSmall">'+game.characters[i]["title"]+'</div><div class="col-xs-4 glyphiconDiv"><span class="glyphicon glyphicon-'+game.elementIcons[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["element"]+': '+game.elementDescriptions[game.elements.indexOf(game.characters[i]["element"].toLowerCase())]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type1"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type1"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type1"])]+'"></span><span class="glyphicon glyphicon-'+game.statIcons[game.stats.indexOf(game.characters[i]["type2"])]+'" aria-hidden="true" data-toggle="tooltip" title="'+game.characters[i]["type2"]+': '+game.statDescriptions[game.stats.indexOf(game.characters[i]["type2"])]+'"></span></div></div><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="enemyHP" style="width:100%">'+game.characters[i]["stats"][0]+' hp</div></div></div>');
 
 			game.changeElement();
 			$("#"+i+"panel").remove();

@@ -63,6 +63,7 @@ p {
 	background-color: #ff2727;
 }
 
-.char img  {
-	background-color: #53ff56;
-}
+.titleSmall {
+	font-size: 12px;
+    margin-top: 8px;
+    float:right;
