@@ -265,6 +265,7 @@ var game = {
 	stats: ["Attack", "Defense", "Hit", "Evade", "Physical", "Tech", "Magic", "Holy"],
 	statIcons: ["pushpin", "tower", "screenshot", "resize-horizontal", "user", "qrcode", "map-marker", "tree-deciduous"],
 	statDescriptions: ["How hard you hit.", "How hard a hit you take.", "How often you hit.", "How often you avoid being hit.", "Attacks with fists, ears, simple weapons, or whatever.", "Attacks made with mechanical or other technology based weapons.", "Magic is an arcane force that uses knowledge to directly change the laws of physics. It is harder to learn than holy, and usually less fickle...unless you mess up yourself. So overall less reliable but more powerful...unless you are going against the world trees.", "Holy power comes from the 6 world trees that hold the continents together – or rarely from the mythical 7th that holds all the continents to eachother."],
+	audio: ["https://www.youtube.com/watch?v=9gknEslyrUU"],
 	changeElement: function() {
 		switch(game.difficulty) {
 			case 1: {
