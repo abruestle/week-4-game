@@ -345,6 +345,7 @@ var game = {
 			$("#comments p").html("The enemy was killed! You won all the battles!")
 			//Goes to comments tab
 			$("#comments-tab a").click();
+			$(".tab-content").attr("class","tab-content");
 		} else {
 			//heal between battles. ...Because otherwise you could not get through 20 characters
 			var healed = Math.floor((game.characters[game.player]["stats"][0]-game.characters[game.player]["stats"][1])/4);
@@ -355,6 +356,7 @@ var game = {
 			$("#comments p").append(" The enemy was killed! You gained "+game.characters[game.player]["stats"][4]+" attack and "+healed+" hp. Select a new opponent.")
 			//Goes to comments tab
 			$("#comments-tab a").click();
+			$(".tab-content").attr("class","tab-content");
 			$("#attack").attr("disabled", "disabled");
 		}
 	},
@@ -366,6 +368,7 @@ var game = {
 		$("#comments p").text("You died. Select a new character?")
 		//Goes to comments tab
 		$("#comments-tab a").click();
+		$(".tab-content").attr("class","tab-content");
 	},
 	chooseChar: function(i) {
 		//I used i as this so that I could steal some of the code from the loop in resetGame. ...It is also easier to see than some of the descriptive names. Later I will change it to 'character' or maybe 'char'
@@ -380,6 +383,7 @@ var game = {
 			$("#comments p").text("Now select an opponent! I recommend starting with one you think is easy.")
 			//Goes to comments tab
 			$("#comments-tab a").click();
+			$(".tab-content").attr("class","tab-content");
 
 						
 
@@ -395,6 +399,7 @@ var game = {
 			$("#comments p").text("Now that you have an opponent, select 'Attack' to start attacking!")
 			//Goes to comments tab
 			$("#comments-tab a").click();
+			$(".tab-content").attr("class","tab-content");
 
 			$("#attack").removeAttr("disabled");
 
@@ -403,6 +408,7 @@ var game = {
 			$("#comments p").text("You already have an opponent! Select 'Attack' to start attacking!")
 			//Goes to comments tab
 			$("#comments-tab a").click();
+			$(".tab-content").attr("class","tab-content");
 		}
 
 	},
@@ -470,6 +476,7 @@ var game = {
 			$("#comments p").append(" The enemy hit for "+damage+" damage.")
 			//Goes to comments tab
 			$("#comments-tab a").click();
+			$(".tab-content").attr("class","tab-content");
 			console.log("enemy hit");
 			game.updateField(0, damage);
 		} else {
@@ -477,6 +484,7 @@ var game = {
 			$("#comments p").append(" The enemy missed.")
 			//Goes to comments tab
 			$("#comments-tab a").click();
+			$(".tab-content").attr("class","tab-content");
 			console.log("The enemy missed.");
 
 			
@@ -502,12 +510,14 @@ var game = {
 			$("#comments p").text("You hit for "+damage+" damage.")
 			//Goes to comments tab
 			$("#comments-tab a").click();
+			$(".tab-content").attr("class","tab-content");
 			game.updateField(1, damage);
 		} else {
 			//attack misses
 			$("#comments p").text("You missed.")
 			//Goes to comments tab
 			$("#comments-tab a").click();
+			$(".tab-content").attr("class","tab-content");
 			console.log("You missed.");
 			// Enemy's turn:
 			game.enemyAttack();
