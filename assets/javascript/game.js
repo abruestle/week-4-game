@@ -61,7 +61,7 @@ var game = {
 		cyborg = {	
 			name: "Reiko",
 			race: "Cyborg",
-			title: "The Cyborg",
+			title: "The Clumsy Cyborg",
 			gender: "Female",
 			element: "Light",
 			stats: [160, 160, 4, 4, 3, 1, 2, 3, 4, 2, 1],
@@ -350,8 +350,11 @@ var game = {
 			//heal between battles. ...Because otherwise you could not get through 20 characters
 			var healed = Math.floor((game.characters[game.player]["stats"][0]-game.characters[game.player]["stats"][1])/4);
 			game.characters[game.player]["stats"][1] = game.characters[game.player]["stats"][1] + healed;
+			$("#playerHP").width(Math.floor(100*game.characters[game.player]["stats"][1]/game.characters[game.player]["stats"][0])+ "%");
+			$("#playerHP").text(game.characters[game.player]["stats"][1]+" hp");
 			//raise attack
 			game.characters[game.player]["stats"][3] = game.characters[game.player]["stats"][3] + game.characters[game.player]["stats"][4];
+			$("#enemy").html('<img alt="Bootstrap Thumbnail First" src="assets/images/enemy.png"><div class="caption"><h3>Computer</h3><div class="progress"><div class="progress-bar progress-success" role="progressbar" id="enemyHP" style="width:100%"></div></div></div>');
 			//killed comment
 			$("#comments p").append(" The enemy was killed! You gained "+game.characters[game.player]["stats"][4]+" attack and "+healed+" hp. Select a new opponent.")
 			//Goes to comments tab
